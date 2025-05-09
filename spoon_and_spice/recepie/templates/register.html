@@ -1,0 +1,185 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <style>
+        /* General reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: url("{% static 'images/recipe.png'%}") no-repeat center center fixed; /* Background image */
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.background-blur {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(8px); /* Blurs the entire background */
+  z-index: -1;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.signup-box {
+  background-color: rgb(85,85,85); /* Grey color with transparency */
+  padding: 30px;
+  border-radius: 10px;
+  width: 320px; /* Adjust width as needed */
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+}
+
+h2 {
+  color: white;
+  margin-bottom: 20px;
+}
+
+.input-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+label {
+  display: block;
+  font-size: 14px;
+  color: #fff;
+  margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: 100%; /* Ensures all inputs are the same width */
+  padding: 10px; /* Padding inside the input box */
+  border: 1px solid #ccc; /* Border for all inputs */
+  border-radius: 5px; /* Rounded corners for all inputs */
+  font-size: 16px; /* Ensures all inputs have the same font size */
+  background-color: #fff; /* Background color for all inputs */
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+  outline: none; /* Removes default focus outline */
+  border-color: #ff7f50; /* Same border color when focused */
+  box-shadow: 0 0 5px rgba(255, 127, 80, 0.5); /* Same shadow effect when focused */
+}
+
+
+
+.btn {
+  width: 100%;
+  background-color: #ff7f50;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #ff6347;
+}
+
+p {
+  font-size: 14px;
+  color: #fff;
+}
+
+a {
+  color: #ff7f50;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+    </style>
+</head>
+<body>
+    <div class="background-blur"></div>
+<div class="container">
+    <div class="signup-box">
+
+    <h1>Register</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+        <div class="input-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" placeholder="Enter your username" required>
+        </div>
+        <div class="input-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+        </div>
+        <div class="input-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            <input type="checkbox" id="showpass1" onclick="showPassword('password', this)"> Show Password
+        </div>
+        <div class="input-group">
+            <label for="confirm_password">Confirm Password</label>
+            <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm your password" required>
+            <input type="checkbox" id="showpass2" onclick="showPassword('confirm_password', this)"> Show Password
+        </div>
+
+        <button type="submit" class="btn">Register</button>
+        <p class="login-link">Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+    </form>
+</div>
+</div>
+
+<script>
+function showPassword(passwordFieldId, checkbox) {
+    var passwordField = document.getElementById(passwordFieldId);
+    passwordField.type = checkbox.checked ? "text" : "password"; // Show or hide password
+}
+
+// Add client-side password match validation
+document.querySelector('form').addEventListener('submit', function(event) {
+    var password = document.getElementById('password').value;
+    var confirmPassword = document.getElementById('confirm_password').value;
+    var email=document.getElementById('email').value
+
+    if (password !== confirmPassword) {
+        alert("Passwords do not match!");
+        event.preventDefault(); // Prevent form submission
+    }
+
+    var regex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+
+    if(!regex.test(email)){
+        alert("INVALID EMAIL");
+        event.preventDefault();S
+    }
+});
+
+</script>
+
+</body>
+</html>

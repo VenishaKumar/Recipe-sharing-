@@ -1,0 +1,273 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Home - Recipe Sharing Website</title>
+
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f2f6fa;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* Navbar */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: darkblue;
+      padding: 10px 20px;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-logo {
+      width: 55px;
+      height: 50px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+
+    .logo-text {
+      font-size: 32px;
+      color: white;
+      font-weight: bold;
+    }
+
+    ul {
+      list-style-type: none;
+      display: flex;
+      gap: 30px;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: black;
+      font-size: 14px;
+      padding: 8px 15px;
+      background-color: #ffffff;
+      border-radius: 60px;
+      transition: background-color 0.3s;
+    }
+
+    nav ul li a:hover {
+      background-color: rgb(60, 58, 58);
+      color: white;
+    }
+
+    .login-container {
+      display: flex;
+      align-items: center;
+    }
+
+    .login-icon {
+      width: 35px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    /* Search Bar */
+    .search-bar form {
+      margin-top: 5px;
+      padding-left: 450px;
+      display: flex;
+      align-items: center;
+      width: 70%;
+    }
+
+    .search-input {
+      width: 80%;
+      padding: 12px 20px;
+      border: 2px solid #004c99;
+      border-radius: 25px;
+      font-size: 18px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      margin-right: 10px;
+    }
+
+    .search-input:focus {
+      border-color: grey;
+      outline: none;
+    }
+
+    .search-button {
+      padding: 12px 24px;
+      background-color: #2b1495;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+    }
+
+    .search-button:hover {
+      background-color: #211f83;
+    }
+
+    /* Categories Section */
+    .categories-section {
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .categories-section h2 {
+      font-size: 38px;
+      color: #004c99;
+      margin-bottom: 30px;
+    }
+
+    .categories {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 30px;
+      margin-top: 30px;
+    }
+
+    .category-card {
+      background-color: white;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      width: 240px;
+      text-align: center;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+
+    .category-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .category-card img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+    }
+
+    .category-card h3 {
+      margin: 15px 0;
+      font-size: 20px;
+      color: #004c99;
+    }
+
+    .category-card a {
+      display: block;
+      padding: 12px;
+      background-color: grey;
+      color: white;
+      font-weight: bold;
+      font-size: 16px;
+      text-decoration: none;
+      border-bottom-left-radius: 15px;
+      border-bottom-right-radius: 15px;
+    }
+
+    .category-card a:hover {
+      background-color: #444;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #004c99;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: auto;
+      box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    footer p {
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="logo-container">
+      <img src="{% static 'images/logo.jpeg' %}" alt="Logo" class="nav-logo" />
+      <div class="logo-text">Spoon & Spice</div>
+    </div>
+
+    <ul>
+      <li><a href="#">PROFILE</a></li>
+      <li><a href="#">SAVED RECIPES</a></li>
+      <li><a href="{% url 'add_recepie' %}">ADD RECIPE</a></li>
+      <li><a href="#">ABOUT</a></li>
+      <li><a href="{% url 'login' %}">LOGIN</a></li>
+    </ul>
+
+    <div class="login-container">
+      <img src="{% static 'images/profile.jpeg' %}" alt="Login" class="login-icon" />
+    </div>
+  </nav>
+
+  <div class="search-bar">
+    <form method="POST" action="{% url 'search_dish' %}">
+      {% csrf_token %}
+      <input type="text" name="query" placeholder="Search for a dish..." value="{{ request.GET.query }}" class="search-input" />
+      <button type="submit" class="search-button">Search</button>
+    </form>
+  </div>
+
+  <!-- Category Section -->
+  <div class="categories-section">
+    <h2>BY CATEGORY</h2>
+    <div class="categories">
+      {% for cat in [
+        ('Breakfast', 'breakfast.jpeg'),
+        ('Lunch', 'lunch.jpeg'),
+        ('Dinner', 'dinner.jpeg'),
+        ('Snacks', 'snacks.jpeg'),
+        ('Desserts', 'desserts.jpeg')
+      ] %}
+        <div class="category-card">
+          <img src="{% static 'images/'|add:cat.1 %}" alt="{{ cat.0 }}">
+          <h3>{{ cat.0|upper }}</h3>
+          <a href="{% url 'category_dishes' category_name=cat.0 %}">View Dishes</a>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Cuisine Section -->
+  <div class="categories-section">
+    <h2>BY CUISINES</h2>
+    <div class="categories">
+      {% for cuisine, image in [
+        ('North Indian', 'north.jpeg'),
+        ('South Indian', 'south.jpeg'),
+        ('Chinese', 'chinese.jpeg'),
+        ('Italian', 'italian.jpeg')
+      ] %}
+        <div class="category-card">
+          <img src="{% static 'images/'|add:image %}" alt="{{ cuisine }}">
+          <h3>{{ cuisine|upper }}</h3>
+          <a href="{% url 'cuisine_dishes' cuisine_name=cuisine %}">View Dishes</a>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Spoon & Spice. All Rights Reserved.</p>
+  </footer>
+</body>
+</html>

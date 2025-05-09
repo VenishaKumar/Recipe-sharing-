@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ADD YOUR RECEPIE</title>
+  <style>
+    /* General body styling */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f0f8ff; /* Light blue background */
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+
+/* Container for the form */
+form {
+  background-color: #ffffff;
+  max-width: 650px;
+  margin: 50px auto;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border: 2px solid #004c99; /* Dark blue border */
+}
+
+/* Form field styling */
+input[type="text"], input[type="email"], input[type="number"], textarea, select {
+  width: 95%;
+  padding: 12px;
+  margin: 8px 0;
+  border: 1px solid #004c99;
+  border-radius: 25px;
+  font-size: 16px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  transition: border-color 0.3s ease;
+  background-color: #f0f8ff; /* Light blue background for fields */
+}
+
+input[type="file"] {
+  padding: 10px;
+  border: none;
+  background-color: transparent;
+  font-size: 14px;
+  color: #004c99;
+  cursor: pointer;
+}
+
+textarea {
+  height: 100px;
+  resize: none;
+}
+
+/* Label styling */
+label {
+  font-size: 14px;
+  font-weight: bold;
+  color: #004c99;
+}
+
+/* Input focus effect */
+input:focus, textarea:focus, select:focus {
+  border-color: #2a9df4; /* Brighter blue on focus */
+  outline: none;
+}
+
+/* Submit button styling */
+input[type="submit"] {
+  width: 100%;
+  background-color: #004c99; /* Dark blue */
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 25px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover {
+  background-color: #0073e6; /* Lighter blue on hover */
+}
+
+/* Styling for form divisions */
+div {
+  margin-bottom: 15px;
+}
+
+/* Optional: Form title */
+h1 {
+  text-align: center;
+  color: #004c99;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* File input label styling */
+input[type="file"] + label {
+  color: #004c99;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+input[type="file"]:hover + label {
+  color: #0073e6;
+}
+
+  </style>
+</head>
+<body>
+  <div>
+    <form  method="POST">
+      {% csrf_token %}
+      <div>
+        <h1>ADD YOUR RECIPIE</h1>
+        <label for="ounername">
+          <input type="text" placeholder="yourname">
+        </label>
+      </div>
+      <div>
+        <label for="owner_email">
+          <input type="email" name="email" id="email"placeholder="email">
+        </label>
+      </div>
+      <div>
+        <label for="dish-name">
+        <input type="text" name="dish-name" id="dish-name" placeholder="dish-name">
+      </label>
+    </div>
+    <div>
+      <label for="veg-nonveg">
+        <select name="veg" id="veg">
+          <option value="veg">veg</option>
+          <option value="nonveg">nonveg</option>
+        </select>
+      </label>
+    </div>
+    <div>
+      <label for="category">
+        <select name="category" id="category">
+          <option value="dinner">dinner</option>
+          <option value="breakfast">breakfast</option>
+          <option value="lunch">lunch</option>
+          <option value="snacks">snacks</option>
+          <option value="desert">desert</option>
+
+        </select>
+      </label>
+    </div>
+    <div>
+      <label for="dish-cat">
+        <select name="dish-cat" id="dish-cat">
+          <option value="south-indian">south-indian</option>
+          <option value="north-indian">north-indian</option>
+          <option value="chinese">chinese</option>
+          <option value="italian">italian</option>
+        </select>
+      </label>
+    </div>
+    <div>
+      <label for="noofppl">
+        <input type="number" name="noofppl" id="noofppl" placeholder="noofppl">
+      
+      </label>
+    </div>
+    <div>
+      <label for="ingredients">
+        <textarea name="ingredients" id="ingredients" placeholder="ingredients"></textarea>
+
+      </label>
+
+
+    </div>
+      <div>
+      <label for="procedure">
+        <textarea name="procedure" id="procedure" placeholder="procedure"></textarea>
+
+      </label>
+    </div>
+    <div>
+      <label for="dish-img">upload your dish image
+      <input type="file" name="dish-img" id="dish-img" accept="image/*">
+    </label>
+    </div>
+    <div>
+      <label for="dish-vdo">upload your dish video  
+        <input type="file" name="dish-vdo" id="dish-vdo" accept="video/*">
+      </label>
+    </div>
+    <div>
+      <input type="submit" value="upload">
+    </div>
+    </form>
+  </div>
+  
+</body>
+</html>

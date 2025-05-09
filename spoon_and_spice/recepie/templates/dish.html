@@ -1,0 +1,17 @@
+
+
+    
+    {% if dish %}
+    <!-- Display the dish details -->
+    <h2>{{ dish.dish_name }}</h2>
+    <p>{{ dish.owner }}</p>
+<p>{{ dish.owner_email }}</p>
+    <p>{{ dish.ingredients }}</p>
+    <p>{{ dish.procedure }}</p>
+{% else %}
+    {% if error_message %}
+        <p>{{ error_message }}</p>
+    {% else %}
+        <p>Welcome! Search for your favorite dish.</p>
+    {% endif %}
+{% endif %}
